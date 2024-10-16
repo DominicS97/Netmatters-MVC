@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mvc_app.Models;
 
+
 #nullable disable
 
 namespace mvc_app.Migrations
