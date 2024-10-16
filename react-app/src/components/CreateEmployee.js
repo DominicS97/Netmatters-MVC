@@ -30,6 +30,8 @@ function CreateEmployee() {
 			.catch((error) => {
 				console.error("Error registering employee: ", error);
 			});
+
+		location.reload();
 	};
 
 	return (

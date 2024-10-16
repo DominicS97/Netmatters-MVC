@@ -26,7 +26,7 @@ function EditEmployee({ match }) {
 		event.preventDefault();
 
 		axios
-			.put(`/api/employee/${product.id}`, product)
+			.put(`/api/employee/${employee.id}`, employee)
 			.then((response) => {
 				console.log("Employee updated successfully: ", response.data);
 			})
