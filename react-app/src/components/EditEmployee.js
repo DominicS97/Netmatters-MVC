@@ -11,16 +11,21 @@ function EditEmployee({ match }) {
 		phone: "",
 	});
 
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const editMode = urlParams.get("var");
+	const employeeId = urlParams.get("id");
+
 	useEffect(() => {
 		axios
-			.get(`/api/employee/${match.params.id}`)
+			.get(`/api/employee/${employeeId}`)
 			.then((response) => {
 				setEmployee(response.data);
 			})
 			.catch((error) => {
 				console.error("Error fetching data: ", error);
 			});
-	}, [match.params.id]);
+	}, []);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -35,79 +40,70 @@ function EditEmployee({ match }) {
 			});
 	};
 
-	return (
-		<div>
-			<h2>Edit Employee</h2>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label>Email:</label>
-					<input
-						type="text"
-						value={employee.email}
-						onChange={(e) =>
-							setEmployee({
-								...employee,
-								email: e.target.value,
-							})
-						}
-					/>
-				</div>
-				<div>
-					<label>First Name:</label>
-					<input
-						type="text"
-						value={employee.firstName}
-						onChange={(e) =>
-							setEmployee({
-								...employee,
-								firstName: e.target.value,
-							})
-						}
-					/>
-				</div>
-				<div>
-					<label>Last Name:</label>
-					<input
-						type="text"
-						value={employee.lastName}
-						onChange={(e) =>
-							setEmployee({
-								...employee,
-								lastName: e.target.value,
-							})
-						}
-					/>
-				</div>
-				<div>
-					<label>Company:</label>
-					<input
-						type="text"
-						value={employee.company}
-						onChange={(e) =>
-							setEmployee({
-								...employee,
-								company: e.target.value,
-							})
-						}
-					/>
-				</div>
-				<div>
-					<label>Phone:</label>
-					<input
-						type="text"
-						value={employee.phone}
-						onChange={(e) =>
-							setEmployee({
-								...employee,
-								phone: e.target.value,
-							})
-						}
-					/>
-				</div>
-				<button type="submit">Update</button>
-			</form>
-		</div>
-	);
+	if (editMode === "1") {
+		return (
+			<div>
+				<h2>Edit Employee</h2>
+				<form onSubmit={handleSubmit}>
+					<div>
+						<label>Email:</label>
+						<input
+							type="text"
+							value={employee.email}
+							onChange={(e) =>
+								setEmployee({
+									...employee,
+									email: e.target.value,
+								})
+							}
+						/>
+					</div>
+					<div>
+						<label>First Name:</label>
+						<input
+							type="text"
+							value={employee.firstName}
+							onChange={(e) =>
+								setEmployee({
+									...employee,
+									firstName: e.target.value,
+								})
+							}
+						/>
+					</div>
+					<div>
+						<label>Last Name:</label>
+						<input
+							type="text"
+							value={employee.lastName}
+							onChange={(e) =>
+								setEmployee({
+									...employee,
+									lastName: e.target.value,
+								})
+							}
+						/>
+					</div>
+					<div>
+						<label>Phone:</label>
+						<input
+							type="text"
+							value={employee.phone}
+							onChange={(e) =>
+								setEmployee({
+									...employee,
+									phone: e.target.value,
+								})
+							}
+						/>
+					</div>
+					<button type="submit">Update</button>
+				</form>
+			</div>
+		);
+	} else {
+		return;
+	}
 }
 
 export default EditEmployee;

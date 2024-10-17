@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function EmployeeList() {
-	const [filter, setFilter] = useState([]);
 	const [employees, setEmployees] = useState([]);
 	const [company, setCompany] = useState({
 		id: 0,
@@ -21,26 +20,40 @@ function EmployeeList() {
 			.get(`/api/company/${companyId}`)
 			.then((response) => {
 				setCompany(response.data);
+				// not working currently
+				return axios
+					.get("/api/employee")
+					.then((response) => {
+						let filter = response.data;
+						setEmployees(
+							filter.filter(
+								(employee) =>
+									employee.company === company.fullName
+							)
+						);
+					})
+					.catch((error) => {
+						console.error("Error fetching data: ", error);
+					});
 			})
 			.catch((error) => {
 				console.error("Error fetching data: ", error);
 			});
-		axios
-			.get("/api/employee")
-			.then((response) => {
-				setEmployees(response.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching data: ", error);
-			});
-		// let filteredEmployees = [];
-		// for (let i = 0; i < filter.length; i++) {
-		// 	if (filter[i].company === company.fullName) {
-		// 		filteredEmployees.push(filter[i]);
-		// 	}
-		// }
-		// setEmployees(filteredEmployees);
 	}, []);
+
+	axios
+		.get("/api/employee")
+		.then((response) => {
+			let filter = response.data;
+			setEmployees(
+				filter.filter(
+					(employee) => employee.company === company.fullName
+				)
+			);
+		})
+		.catch((error) => {
+			console.error("Error fetching data: ", error);
+		});
 
 	const buttonDeleteEmployee = (event) => {
 		const deleteTargetId = event.target.parentElement.id;
@@ -83,6 +96,12 @@ function EmployeeList() {
 		window.location = `/edit/?var=0&id=${companyId}`;
 	};
 
+	const buttonEditEmployee = (event) => {
+		const editTargetId = event.target.parentElement.id;
+
+		window.location = `/edit/?var=1&id=${editTargetId}`;
+	};
+
 	const buttonCreateEmployee = (event) => {
 		event.preventDefault();
 		window.location = `/create?var=1&id=${companyId}`;
@@ -106,7 +125,7 @@ function EmployeeList() {
 					<p>
 						<bold>Phone:</bold> {employee.phone}
 					</p>
-					<button>EDIT</button>
+					<button onClick={buttonEditEmployee}>EDIT</button>
 					<button onClick={buttonDeleteEmployee}>DELETE</button>
 				</div>
 			))}
