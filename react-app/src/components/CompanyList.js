@@ -15,26 +15,21 @@ function CompanyList() {
 			});
 	}, []);
 
-	const buttonDeleteCompany = (event) => {
-		const deleteTargetId = event.target.parentElement.id;
-		const deleteTarget = {
-			id: deleteTargetId,
-		};
+	const viewCompany = (event) => {
+		const viewTargetId = event.target.parentElement.id;
+		const targetURL = "/list?id=" + viewTargetId;
 
-		axios
-			.delete(`/api/company/${deleteTargetId}`, deleteTarget)
-			.then((response) => {
-				console.log("Company deleted successfully: ", response.data);
-			})
-			.catch((error) => {
-				console.error("Error deleting company: ", error);
-			});
+		window.location = targetURL;
+	};
 
-		location.reload();
+	const newCompany = (event) => {
+		event.preventDefault();
+		window.location = "/create?var=0";
 	};
 
 	return (
 		<div>
+			<button onClick={newCompany}>Register Company</button>
 			<h2>Company List</h2>
 			{companies.map((company) => (
 				<div id={company.id} key={company.id}>
@@ -46,7 +41,7 @@ function CompanyList() {
 					<p>
 						<a href={company.website}>Visit Website Here</a>
 					</p>
-					<button onClick={buttonDeleteCompany}>DELETE</button>
+					<button onClick={viewCompany}>VIEW</button>
 				</div>
 			))}
 		</div>

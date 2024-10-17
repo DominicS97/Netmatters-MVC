@@ -15,7 +15,7 @@ function EditEmployee({ match }) {
 		axios
 			.get(`/api/employee/${match.params.id}`)
 			.then((response) => {
-				setProduct(response.data);
+				setEmployee(response.data);
 			})
 			.catch((error) => {
 				console.error("Error fetching data: ", error);
