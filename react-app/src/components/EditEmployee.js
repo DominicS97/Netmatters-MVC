@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function EditEmployee({ match }) {
+function EditEmployee() {
 	const [employee, setEmployee] = useState({
 		id: 0,
 		email: "",
@@ -27,7 +27,7 @@ function EditEmployee({ match }) {
 			});
 	}, []);
 
-	const handleSubmit = (event) => {
+	const editEmployee = (event) => {
 		event.preventDefault();
 
 		axios
@@ -44,7 +44,7 @@ function EditEmployee({ match }) {
 		return (
 			<div>
 				<h2>Edit Employee</h2>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={editEmployee}>
 					<div>
 						<label>Email:</label>
 						<input

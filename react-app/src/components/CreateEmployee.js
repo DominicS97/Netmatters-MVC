@@ -24,7 +24,7 @@ function CreateEmployee() {
 			});
 	}, []);
 
-	const handleSubmit = (event) => {
+	const registerEmployee = (event) => {
 		event.preventDefault();
 
 		const employee = {
@@ -54,7 +54,7 @@ function CreateEmployee() {
 		return (
 			<div>
 				<h2>Register Employee at {company}</h2>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={registerEmployee}>
 					<div>
 						<label>Email:</label>
 						<input

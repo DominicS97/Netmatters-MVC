@@ -7,7 +7,7 @@ function CreateCompany() {
 	const [logo, setLogo] = useState("");
 	const [website, setWebsite] = useState("");
 
-	const handleSubmit = (event) => {
+	const registerCompany = (event) => {
 		event.preventDefault();
 
 		const company = {
@@ -30,7 +30,7 @@ function CreateCompany() {
 	return (
 		<div>
 			<h2>Register Company</h2>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={registerCompany}>
 				<div>
 					<label>Company Name:</label>
 					<input
